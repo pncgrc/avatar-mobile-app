@@ -1,28 +1,25 @@
-import { Stack, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 
 export default function RootLayout() {
   return (
     <>
       <Tabs>
         <Tabs.Screen
-          // Name of the dynamic route.
           name="index"
           options={{
-            title: 'Home',
+            title: "Home",
           }}
         />
         <Tabs.Screen
-          // Name of the dynamic route.
-          name="characters/index"
+          name="characters"
           options={{
-            title: 'Characters',
+            title: "Characters",
           }}
         />
         <Tabs.Screen
-          // Name of the dynamic route.
           name="quiz"
           options={{
-            title: 'Quiz',
+            title: "Quiz",
           }}
         />
       </Tabs>
