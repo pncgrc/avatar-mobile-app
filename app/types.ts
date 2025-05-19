@@ -56,5 +56,13 @@ export interface CharacterCardPropsBasic {
   personalInformation: {
     fightingStyles: string[];
   };
-  // Add other fields as needed
+};
+
+export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Nomad";
+
+export type NationTheme = {
+  card: { backgroundColor: string; borderColor: string };
+  name: { color: string };
+  label: { color: string };
+  value: { color: string };
 };

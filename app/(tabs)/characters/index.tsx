@@ -1,8 +1,8 @@
 import CharacterCard from "@/app/components/CharacterCardBasic";
 import { CharacterCardPropsBasic } from "@/app/types";
-import { Link, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, FlatList, Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 
 
 
@@ -11,7 +11,7 @@ export default function CharactersPage() {
   const [data, setData] = useState<CharacterCardPropsBasic[]>([]);
 
   useEffect(() => {
-      const headers = { 'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMwODAwMzdAYXAuYmUiLCJpYXQiOjE3NDc1OTQ2NDJ9.KFzP5GcRHmXdTRgx6lqO_JE-DyKgn7SZf7UP0E84Rvg' };
+      const headers = { "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMwODAwMzdAYXAuYmUiLCJpYXQiOjE3NDc1OTQ2NDJ9.KFzP5GcRHmXdTRgx6lqO_JE-DyKgn7SZf7UP0E84Rvg" };
       const baseURL = "https://sampleapis.assimilate.be/avatar/characters";
   
       fetch(baseURL, {headers})
@@ -28,13 +28,10 @@ export default function CharactersPage() {
         justifyContent: "center",
         alignItems: "center",
         padding: 15,
+        backgroundColor: "#ccc",
       }}
     >
-      <Text>Characters Page</Text>
-      <Link href={{
-        pathname: "/characters/[name]",
-        params: { name: "Aang" }
-      }}>AANG</Link>
+      <Text>Avatar Characters</Text>
 
       <FlatList
         data={data}
@@ -50,8 +47,6 @@ export default function CharactersPage() {
           onPress={() => router.push(`/characters/${item.name}`)} />
         )}
       />
-
-      <Button title="Go to settings" onPress={() => router.push("./settings")}></Button>
     </View>
   );
 }
