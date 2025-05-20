@@ -1,4 +1,4 @@
-import CharacterCard from "@/app/components/CharacterCardBasic";
+import CharacterCardBasic from "@/app/components/CharacterCardBasic";
 import { CharacterCardPropsBasic } from "@/app/types";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -32,21 +32,31 @@ export default function CharactersPage() {
       }}
     >
       <Text>Avatar Characters</Text>
-
-      <FlatList
+      {
+        data ? (
+          <FlatList
         data={data}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <CharacterCard characterCardPropsBasic={{
+          <CharacterCardBasic characterCardPropsBasic={{
             id: item.id,
             name: item.name,
-            image: item.image, 
-            bio: { nationality: item.bio.nationality, ethnicity: item.bio.ethnicity, ages: item.bio.ages },
-            personalInformation: { fightingStyles: item.personalInformation.fightingStyles },
+            image: item.image,
+            bio: {
+              nationality: item.bio.nationality,
+              ethnicity: item.bio.ethnicity,
+              ages: item.bio.ages,
+            },
+            personalInformation: {
+              fightingStyles: item.personalInformation.fightingStyles,
+            }
           }}
           onPress={() => router.push(`/characters/${item.name}`)} />
         )}
       />
+        ) : (<Text>Loading...</Text>)
+      }
+      
     </View>
   );
 }

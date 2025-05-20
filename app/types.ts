@@ -58,6 +58,34 @@ export interface CharacterCardPropsBasic {
   };
 };
 
+export interface CharacterCardPropsDetail {
+  id: number;
+  name: string;
+  image: string;
+  bio: {
+    alternativeNames: string[];
+    nationality: string;
+    ethnicity: string;
+    ages: string[];
+    born: string;
+  };
+  personalInformation: {
+    loveInterst: string;
+    loveInterest: string;
+    allies: string[];
+    enemies: string[];
+    weaponsOfChoice: string[];
+    fightingStyles: string[];
+  };
+  politicalInformation: {
+    affiliations: string[];
+  };
+  chronologicalInformation: {
+    firstAppearance: string;
+    voicedBy: string[];
+  };
+};
+
 export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Nomad";
 
 export type NationTheme = {

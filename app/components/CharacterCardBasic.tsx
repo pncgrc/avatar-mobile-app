@@ -12,14 +12,13 @@ const CharacterCard = ({characterCardPropsBasic, onPress}: {characterCardPropsBa
         <Image source={{uri: characterCardPropsBasic.image}} style={styles.image} resizeMode="contain" />
         <Link style={[styles.name, nationTheme.name]} href={`/characters/${characterCardPropsBasic.name}`}>{characterCardPropsBasic.name}</Link>
         <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsBasic.bio.nationality}</Text></Text>
-        <Text style={[styles.label, nationTheme.label]}>Age: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsBasic.bio.ages[0]}</Text></Text>
-        <Text style={[styles.label, nationTheme.label]}>Fighting styles: {" "}
-            <Text style={[styles.value, nationTheme.value]}>
-            {
+        <Text style={[styles.label, nationTheme.label]}>Age: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsBasic.bio.ages[0] === "N" ? "No age data" : characterCardPropsBasic.bio.ages[0]}</Text></Text>
+        <Text style={[styles.label, nationTheme.label]}>Fighting styles: <Text style={[styles.value, nationTheme.value]}>
+          {
             Array.isArray(characterCardPropsBasic.personalInformation.fightingStyles) ? characterCardPropsBasic.personalInformation.fightingStyles.join(", ") 
-            : characterCardPropsBasic.personalInformation.fightingStyles
-            }
-            </Text>
+            : characterCardPropsBasic.personalInformation.fightingStyles === "NA" ? "Doesn't fight" : characterCardPropsBasic.personalInformation.fightingStyles
+          }
+        </Text>
         </Text>
     </Pressable>
   );
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#5C3A21",
     fontWeight: "600",
-    marginTop: 4,
+    marginTop: 15,
     fontFamily: "serif",
   },
   value: {

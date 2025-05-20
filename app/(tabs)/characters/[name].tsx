@@ -1,16 +1,15 @@
-import CharacterCard from "@/app/components/CharacterCardBasic";
-import { CharacterCardPropsBasic } from "@/app/types";
+import CharacterCardDetail from "@/app/components/CharacterCardDetail";
+import { CharacterCardPropsDetail } from "@/app/types";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 export default function CharacterDetailPage() {
 
-  const [data, setData] = useState<CharacterCardPropsBasic | null>(null);
+  const [data, setData] = useState<CharacterCardPropsDetail | null>(null);
   const { name } = useLocalSearchParams();
   
   useEffect(() => {
-    console.log(`Param:${name}`);
     const headers = { "Authorization": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMwODAwMzdAYXAuYmUiLCJpYXQiOjE3NDc1OTQ2NDJ9.KFzP5GcRHmXdTRgx6lqO_JE-DyKgn7SZf7UP0E84Rvg" };
     const baseURL = "https://sampleapis.assimilate.be/avatar/characters/";
 
@@ -28,19 +27,15 @@ export default function CharacterDetailPage() {
     <View
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 15,
         backgroundColor: "#ccc",
-      }}
-    >
-      <Text>Character detail page</Text>
+      }}>
 
       {
         data ? (
-          <CharacterCard characterCardPropsBasic={data} />
+          <CharacterCardDetail characterCardPropsDetail={data} />
         ) : (<Text>Loading...</Text>)
-      }      
+      } 
+
     </View>
   );
 }
