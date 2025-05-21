@@ -15,7 +15,7 @@ const CharacterCardDetail = ({characterCardPropsDetail}: {characterCardPropsDeta
       <Text style={[styles.label, nationTheme.label]}>Alternative names: <Text style={[styles.value, nationTheme.value]}>
         {
           Array.isArray(characterCardPropsDetail.bio.alternativeNames) ? characterCardPropsDetail.bio.alternativeNames.join(", ") 
-          : characterCardPropsDetail.bio.alternativeNames === "NA" ? "No alternative names" : characterCardPropsDetail.personalInformation.fightingStyles
+          : characterCardPropsDetail.bio.alternativeNames === "NA" ? "No alternative names" : characterCardPropsDetail.bio.alternativeNames
         }</Text>
       </Text>
       <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.bio.nationality}</Text></Text>
@@ -71,7 +71,6 @@ const CharacterCardDetail = ({characterCardPropsDetail}: {characterCardPropsDeta
       <Text></Text>
       <Text></Text>
       <Text></Text>
-      
     </ScrollView>
   );
 };

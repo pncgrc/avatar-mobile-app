@@ -8,18 +8,21 @@ export default function RootLayout() {
           name="index"
           options={{
             title: "Home",
+            headerShown: false,
           }}
         />
         <Tabs.Screen
           name="characters"
           options={{
             title: "Characters",
+            headerShown: false,
           }}
         />
         <Tabs.Screen
           name="quiz"
           options={{
             title: "Quiz",
+            headerShown: false,
           }}
         />
       </Tabs>
