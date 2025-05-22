@@ -32,79 +32,89 @@ const CharacterCard = ({characterCardBasicProps, onPress}: {characterCardBasicPr
 const styles = StyleSheet.create({
   card: {
     flexDirection: "column",
-    backgroundColor: "#F3E9D2", // parchment-like neutral background
-    padding: 20,
-    shadowColor: "#3B1F00", // darker brown, like old ink
-    shadowOpacity: 0.2,
-    shadowRadius: 8,
-    marginBottom: 20,
-    elevation: 5,
-    borderRadius: 18,
+    backgroundColor: "#F8F1E3", // softer parchment tone
+    padding: 24,
+    shadowColor: "#3B1F00",
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+    borderRadius: 20,
     borderWidth: 2,
-    borderColor: "#A67B5B", // bamboo or earth-toned border
+    borderColor: "#A67B5B",
+    marginBottom: 24,
   },
   image: {
     width: 320,
     height: 240,
-    borderRadius: 10,
+    borderRadius: 12,
     alignSelf: "center",
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: "#CBB08A", // aged scroll edge
   },
   name: {
-    fontSize: 26,
+    fontSize: 28,
     fontWeight: "700",
-    color: "#3E2C1C", // dark brown for a calligraphic feel
+    color: "#3E2C1C",
     textAlign: "center",
-    marginVertical: 8,
-    fontFamily: "serif", // swap with custom font if using e.g. a stylized East Asian one
+    marginVertical: 10,
+    fontFamily: "serif", // consider a stylized Asian font if possible
+    letterSpacing: 0.5,
   },
   label: {
-    fontSize: 16,
+    fontSize: 17,
     color: "#5C3A21",
     fontWeight: "600",
-    marginTop: 15,
+    marginTop: 16,
     fontFamily: "sans-serif",
+    letterSpacing: 0.4,
   },
   value: {
     color: "#2A1C0F",
     fontWeight: "700",
+    fontSize: 16,
     fontFamily: "sans-serif",
+    marginTop: 4,
   },
 });
 
 
 
+
 const nationThemes: Record<Nation | "default", NationTheme> = {
   "Fire Nation": {
-    card: { backgroundColor: "#3B0A0A", borderColor: "#FF5C38" }, // deep crimson + fiery orange border
-    name: { color: "#FFFFFF" },             // white — strong contrast
-    label: { color: "#FFA07A" },            // light salmon
-    value: { color: "#FFEEDD" },            // warm off-white
+    card: { backgroundColor: "#4B0C0C", borderColor: "#FF5C38" },
+    name: { color: "#FFF4E6" },
+    label: { color: "#FFB49E" },
+    value: { color: "#FFEEDD" },
   },
   "Earth Kingdom": {
-    card: { backgroundColor: "#2C3B2A", borderColor: "#B5D67E" }, // earthy green tone
-    name: { color: "#FFFFFF" },
-    label: { color: "#C8E6A0" },            // pastel green
-    value: { color: "#F2FFE9" },            // creamy mint
+    card: { backgroundColor: "#2A3B2C", borderColor: "#B5D67E" },
+    name: { color: "#F9FFE5" },
+    label: { color: "#D4F3A5" },
+    value: { color: "#F0FFE0" },
   },
   "Water Tribe": {
-    card: { backgroundColor: "#1B3A57", borderColor: "#70C3FF" }, // dark navy
-    name: { color: "#FFFFFF" },
-    label: { color: "#AEDFF7" },            // bright light blue
-    value: { color: "#E5F8FF" },         // soft ice blue
+    card: { backgroundColor: "#123552", borderColor: "#70C3FF" },
+    name: { color: "#E8F9FF" },
+    label: { color: "#BDEBFF" },
+    value: { color: "#E5F8FF" },
   },
   "Air Nomad": {
-    card: { backgroundColor: "#FFF7E0", borderColor: "#FFCC80" }, // light parchment gold
-    name: { color: "#4E342E" },             // deep brown
-    label: { color: "#5D4037" },            // medium brown
-    value: { color: "#3E2723" },            // dark chocolate
+    card: { backgroundColor: "#FFF7E2", borderColor: "#FFD480" },
+    name: { color: "#5D4037" },
+    label: { color: "#6D4C41" },
+    value: { color: "#3E2723" },
   },
   default: {
-    card: { backgroundColor: "#F4F1EC", borderColor: "#CBAF87" }, // neutral soft base
+    card: { backgroundColor: "#F5F2EB", borderColor: "#CBAF87" },
     name: { color: "#2E1C0F" },
     label: { color: "#5B4646" },
-    value: { color: "#000000" },
+    value: { color: "#1A110D" },
   },
 };
+
 
 
 
