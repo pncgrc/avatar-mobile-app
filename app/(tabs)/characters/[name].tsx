@@ -1,12 +1,12 @@
 import CharacterCardDetail from "@/app/components/CharacterCardDetail";
-import { CharacterCardPropsDetail } from "@/app/types";
+import { CharacterCardDetailProps } from "@/types";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";
 
 export default function CharacterDetailPage() {
 
-  const [data, setData] = useState<CharacterCardPropsDetail | null>(null);
+  const [data, setData] = useState<CharacterCardDetailProps | null>(null);
   const { name } = useLocalSearchParams();
   
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function CharacterDetailPage() {
 
       {
         data ? (
-          <CharacterCardDetail characterCardPropsDetail={data} />
+          <CharacterCardDetail characterCardDetailProps={data} />
         ) : (<Text>Loading...</Text>)
       } 
 

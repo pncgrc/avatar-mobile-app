@@ -1,25 +1,30 @@
-import { CharacterCardPropsBasic, Nation, NationTheme } from "@/app/types";
+import { CharacterCardBasicProps, Nation, NationTheme } from "@/types";
 import { Link } from "expo-router";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
+import UnorderedList from "./UnorderedList";
 
-const CharacterCard = ({characterCardPropsBasic, onPress}: {characterCardPropsBasic: CharacterCardPropsBasic, onPress?: () => void;}) => {
+const CharacterCard = ({characterCardBasicProps, onPress}: {characterCardBasicProps: CharacterCardBasicProps, onPress?: () => void;}) => {
 
-  const nationTheme = getNationTheme(characterCardPropsBasic.bio.nationality, characterCardPropsBasic.bio.ethnicity);
+  const nationTheme = getNationTheme(characterCardBasicProps.bio.nationality, characterCardBasicProps.bio.ethnicity);
 
   return (
     <Pressable style={[styles.card, nationTheme.card]} onPress={onPress}>
-        <Image source={{uri: characterCardPropsBasic.image}} style={styles.image} resizeMode="contain" />
-        <Link style={[styles.name, nationTheme.name]} href={`/characters/${characterCardPropsBasic.name}`}>{characterCardPropsBasic.name}</Link>
-        <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsBasic.bio.nationality}</Text></Text>
-        <Text style={[styles.label, nationTheme.label]}>Age: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsBasic.bio.ages[0] === "N" ? "No age data" : characterCardPropsBasic.bio.ages[0]}</Text></Text>
-        <Text style={[styles.label, nationTheme.label]}>Fighting styles: <Text style={[styles.value, nationTheme.value]}>
+        <Image source={{uri: characterCardBasicProps.image}} style={styles.image} resizeMode="contain" />
+        <Link style={[styles.name, nationTheme.name]} href={`/characters/${characterCardBasicProps.name}`}>{characterCardBasicProps.name}</Link>
+        <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardBasicProps.bio.nationality}</Text></Text>
+        <Text style={[styles.label, nationTheme.label]}>Age:{" "}        
           {
-            Array.isArray(characterCardPropsBasic.personalInformation.fightingStyles) ? characterCardPropsBasic.personalInformation.fightingStyles.join(", ") 
-            : characterCardPropsBasic.personalInformation.fightingStyles === "NA" ? "Doesn't fight" : characterCardPropsBasic.personalInformation.fightingStyles
+            Array.isArray(characterCardBasicProps.bio.ages) ?
+            <Text style={[styles.value, nationTheme.value]}>{characterCardBasicProps.bio.ages[0]}</Text> :
+            characterCardBasicProps.bio.ages === "NA" ? 
+            <Text style={[styles.value, nationTheme.value]}>Unknown</Text> :
+            <Text style={[styles.value, nationTheme.value]}>{characterCardBasicProps.bio.ages}</Text>          
           }
-        </Text>
-        </Text>
+        </Text>    
+        
+        <Text style={[styles.label, nationTheme.label]}>Fighting styles: </Text>
+        <UnorderedList value={characterCardBasicProps.personalInformation.fightingStyles} styles={styles} theme={nationTheme} alternateInfo="Doesn't fight" />        
     </Pressable>
   );
 };
@@ -57,12 +62,12 @@ const styles = StyleSheet.create({
     color: "#5C3A21",
     fontWeight: "600",
     marginTop: 15,
-    fontFamily: "serif",
+    fontFamily: "sans-serif",
   },
   value: {
     color: "#2A1C0F",
     fontWeight: "700",
-    fontFamily: "serif",
+    fontFamily: "sans-serif",
   },
 });
 

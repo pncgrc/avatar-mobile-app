@@ -1,3 +1,18 @@
+import { StyleProp, TextStyle } from "react-native";
+
+export interface Creator {
+  name: string;
+  url: string;
+}
+
+export interface ShowInfoProps {
+  id: number;
+  synopsis: string;
+  yearsAired: string;
+  genres: string[];
+  creators: Creator[];
+}
+
 export interface CharacterDataW {
   id: number;
   name: string;
@@ -6,7 +21,7 @@ export interface CharacterDataW {
     alternativeNames: string[];
     nationality: string;
     ethnicity: string;
-    ages: string[];
+    ages: string | string[];
     born: string;
     died: string[];
   };
@@ -37,14 +52,7 @@ export interface CharacterDataW {
   };
 };
 
-/*export interface CharacterCardPropsBasic {
-  name: string;
-  image: string;
-  nationality: string;
-  age: string;
-};*/
-
-export interface CharacterCardPropsBasic {
+export interface CharacterCardBasicProps {
   id: number;
   name: string;
   image: string;
@@ -58,7 +66,7 @@ export interface CharacterCardPropsBasic {
   };
 };
 
-export interface CharacterCardPropsDetail {
+export interface CharacterCardDetailProps {
   id: number;
   name: string;
   image: string;
@@ -84,6 +92,15 @@ export interface CharacterCardPropsDetail {
     firstAppearance: string;
     voicedBy: string[];
   };
+};
+
+export interface UnorderedListProps {
+  value: string[] | string;
+  styles: {
+    value: StyleProp<TextStyle>;
+  };
+  theme: NationTheme;
+  alternateInfo: string; 
 };
 
 export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Nomad";

@@ -1,72 +1,60 @@
-import { CharacterCardPropsDetail, Nation, NationTheme } from "@/app/types";
+import { CharacterCardDetailProps, Nation, NationTheme } from "@/types";
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text } from "react-native";
+import UnorderedList from "./UnorderedList";
 
-const CharacterCardDetail = ({characterCardPropsDetail}: {characterCardPropsDetail: CharacterCardPropsDetail}) => {
+const CharacterCardDetail = ({characterCardDetailProps}: {characterCardDetailProps: CharacterCardDetailProps}) => {
 
-  const nationTheme = getNationTheme(characterCardPropsDetail.bio.nationality, characterCardPropsDetail.bio.ethnicity);
+  const nationTheme = getNationTheme(characterCardDetailProps.bio.nationality, characterCardDetailProps.bio.ethnicity);
 
   return (
-    <ScrollView style={[styles.card, nationTheme.card]} key={characterCardPropsDetail.id}>
-      <Text style={[styles.name, nationTheme.name]}>{characterCardPropsDetail.name}</Text>
-      <Image source={{uri: characterCardPropsDetail.image}} style={styles.image} resizeMode="contain" />
+    <ScrollView style={[styles.card, nationTheme.card]} key={characterCardDetailProps.id}>
+      <Text style={[styles.name, nationTheme.name]}>{characterCardDetailProps.name}</Text>
+      <Image source={{uri: characterCardDetailProps.image}} style={styles.image} resizeMode="contain" />
 
       <Text style={[styles.title, nationTheme.name]}>Bio</Text>
-      <Text style={[styles.label, nationTheme.label]}>Alternative names: <Text style={[styles.value, nationTheme.value]}>
+
+      <Text style={[styles.label, nationTheme.label]}>Alternative names:</Text>
+      <UnorderedList value={characterCardDetailProps.bio.alternativeNames} styles={styles} theme={nationTheme} alternateInfo="No alternative names"/>
+      
+      <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.bio.nationality}</Text></Text>
+      <Text style={[styles.label, nationTheme.label]}>Ethnicity: <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.bio.nationality}</Text></Text>
+      <Text style={[styles.label, nationTheme.label]}>Age:{" "}        
         {
-          Array.isArray(characterCardPropsDetail.bio.alternativeNames) ? characterCardPropsDetail.bio.alternativeNames.join(", ") 
-          : characterCardPropsDetail.bio.alternativeNames === "NA" ? "No alternative names" : characterCardPropsDetail.bio.alternativeNames
-        }</Text>
+          Array.isArray(characterCardDetailProps.bio.ages) ?
+          <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.bio.ages[0]}</Text> :
+          characterCardDetailProps.bio.ages === "NA" ? 
+          <Text style={[styles.value, nationTheme.value]}>Unknown</Text> :
+          <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.bio.ages}</Text>          
+        }
       </Text>
-      <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.bio.nationality}</Text></Text>
-      <Text style={[styles.label, nationTheme.label]}>Ethnicity: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.bio.nationality}</Text></Text>
-      <Text style={[styles.label, nationTheme.label]}>Age: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.bio.ages[0] === "N" ? "No age data" : characterCardPropsDetail.bio.ages[0]}</Text></Text>
-      <Text style={[styles.label, nationTheme.label]}>Born: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.bio.born === "NA" ? "Unknown" : characterCardPropsDetail.bio.born}</Text></Text>
+      <Text style={[styles.label, nationTheme.label]}>Born: <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.bio.born === "NA" ? "Unknown" : characterCardDetailProps.bio.born}</Text></Text>
       
       <Text style={[styles.title, nationTheme.name]}>Personal information</Text>
-      <Text style={[styles.label, nationTheme.label]}>Love interest: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.personalInformation.loveInterest ? characterCardPropsDetail.personalInformation.loveInterest : characterCardPropsDetail.personalInformation.loveInterst}</Text></Text>
+      <Text style={[styles.label, nationTheme.label]}>Love interest: <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.personalInformation.loveInterest ? characterCardDetailProps.personalInformation.loveInterest : characterCardDetailProps.personalInformation.loveInterst}</Text></Text>
       
-      <Text style={[styles.label, nationTheme.label]}>Allies: <Text style={[styles.value, nationTheme.value]}>
-        {
-          Array.isArray(characterCardPropsDetail.personalInformation.allies) ? characterCardPropsDetail.personalInformation.allies.join(", ") 
-          : characterCardPropsDetail.personalInformation.allies === "NA" ? "No alternative names" : characterCardPropsDetail.personalInformation.allies
-        }</Text>
-      </Text>
-      <Text style={[styles.label, nationTheme.label]}>Enemies: <Text style={[styles.value, nationTheme.value]}>
-        {
-          Array.isArray(characterCardPropsDetail.personalInformation.enemies) ? characterCardPropsDetail.personalInformation.enemies.join(", ") 
-          : characterCardPropsDetail.personalInformation.enemies === "NA" ? "No alternative names" : characterCardPropsDetail.personalInformation.enemies
-        }</Text>
-      </Text>
-      <Text style={[styles.label, nationTheme.label]}>Weapons of choice: <Text style={[styles.value, nationTheme.value]}>
-        {
-          Array.isArray(characterCardPropsDetail.personalInformation.weaponsOfChoice) ? characterCardPropsDetail.personalInformation.weaponsOfChoice.join(", ") 
-          : characterCardPropsDetail.personalInformation.weaponsOfChoice === "NA" ? "No alternative names" : characterCardPropsDetail.personalInformation.weaponsOfChoice
-        }</Text>
-      </Text>
-      <Text style={[styles.label, nationTheme.label]}>Fighting styles: <Text style={[styles.value, nationTheme.value]}>
-        {
-          Array.isArray(characterCardPropsDetail.personalInformation.fightingStyles) ? characterCardPropsDetail.personalInformation.fightingStyles.join(", ") 
-          : characterCardPropsDetail.personalInformation.fightingStyles === "NA" ? "Doesn't fight" : characterCardPropsDetail.personalInformation.fightingStyles
-        }</Text>
-      </Text>
+      <Text style={[styles.label, nationTheme.label]}>Allies: </Text>
+      <UnorderedList value={characterCardDetailProps.personalInformation.allies} styles={styles} theme={nationTheme} alternateInfo="No allies" />
+
+      <Text style={[styles.label, nationTheme.label]}>Enemies: </Text>
+      <UnorderedList value={characterCardDetailProps.personalInformation.enemies} styles={styles} theme={nationTheme} alternateInfo="No enemies" />      
+
+      <Text style={[styles.label, nationTheme.label]}>Weapons of choice: </Text>
+      <UnorderedList value={characterCardDetailProps.personalInformation.weaponsOfChoice} styles={styles} theme={nationTheme} alternateInfo="Doesn't use weapons" />
+      
+      <Text style={[styles.label, nationTheme.label]}>Fighting styles: </Text>
+      <UnorderedList value={characterCardDetailProps.personalInformation.fightingStyles} styles={styles} theme={nationTheme} alternateInfo="Doesn't fight" />
 
       <Text style={[styles.title, nationTheme.name]}>Political information</Text>
-      <Text style={[styles.label, nationTheme.label]}>Affiliations: <Text style={[styles.value, nationTheme.value]}>
-        {
-          Array.isArray(characterCardPropsDetail.politicalInformation.affiliations) ? characterCardPropsDetail.politicalInformation.affiliations.join(", ") 
-          : characterCardPropsDetail.politicalInformation.affiliations === "NA" ? "No affiliations" : characterCardPropsDetail.politicalInformation.affiliations
-        }</Text>
-      </Text>
+      <Text style={[styles.label, nationTheme.label]}>Affiliations: </Text>
+      <UnorderedList value={characterCardDetailProps.politicalInformation.affiliations} styles={styles} theme={nationTheme} alternateInfo="No affiliations" />
+      
 
       <Text style={[styles.title, nationTheme.name]}>Chronological information</Text>
-      <Text style={[styles.label, nationTheme.label]}>First appearance: <Text style={[styles.value, nationTheme.value]}>{characterCardPropsDetail.chronologicalInformation.firstAppearance}</Text></Text>
-      <Text style={[styles.label, nationTheme.label]}>Voiced by: <Text style={[styles.value, nationTheme.value]}>
-        {
-          Array.isArray(characterCardPropsDetail.chronologicalInformation.voicedBy) ? characterCardPropsDetail.chronologicalInformation.voicedBy.join(", ") 
-          : characterCardPropsDetail.chronologicalInformation.voicedBy === "NA" ? "Not voiced" : characterCardPropsDetail.chronologicalInformation.voicedBy
-        }</Text>
-      </Text>
+      <Text style={[styles.label, nationTheme.label]}>First appearance: <Text style={[styles.value, nationTheme.value]}>{characterCardDetailProps.chronologicalInformation.firstAppearance}</Text></Text>
+      <Text style={[styles.label, nationTheme.label]}>Voiced by: </Text>
+      <UnorderedList value={characterCardDetailProps.chronologicalInformation.voicedBy} styles={styles} theme={nationTheme} alternateInfo="Not voiced" />
+      
       <Text></Text>
       <Text></Text>
       <Text></Text>
@@ -115,12 +103,12 @@ const styles = StyleSheet.create({
     color: "#5C3A21",
     fontWeight: "600",
     marginTop: 10,
-    fontFamily: "serif",
+    fontFamily: "sans-serif",
   },
   value: {
     color: "#2A1C0F",
     fontWeight: "700",
-    fontFamily: "serif",
+    fontFamily: "sans-serif",
   },
 });
 
