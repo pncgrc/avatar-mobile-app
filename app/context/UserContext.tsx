@@ -1,13 +1,8 @@
-import { User } from "@/app/types";
+import { User, UserContextType } from "@/app/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 
-type UserContextType = {
-  user: User | null;
-  setUser: (user: User | null) => void;
-  login: (username: string) => Promise<void>;
-  logout: () => Promise<void>;
-};
+
 
 export const UserContext = createContext<UserContextType>({
   user: null,
@@ -38,7 +33,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
     } else {
       const avatarUrl = `https://api.dicebear.com/6.x/bottts-neutral/svg?seed=${username}`;
       const quizPoints: number = 0;
-      const newUser: User = { username, avatarUrl, quizPoints };
+      const newUser: User = { username, avatarUrl, quizPoints, };
       await AsyncStorage.setItem(`user:${username}`, JSON.stringify(newUser));
       await AsyncStorage.setItem("currentUser", JSON.stringify(newUser));
       setUser(newUser);
@@ -51,7 +46,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <UserContext.Provider value={{ user, setUser, login, logout }}>
+    <UserContext.Provider value={{ user, setUser, login, logout, }}>
       {children}
     </UserContext.Provider>
   );

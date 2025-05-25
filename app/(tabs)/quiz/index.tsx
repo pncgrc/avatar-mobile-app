@@ -1,8 +1,11 @@
 import CustomAvatarButton from "@/app/components/CustomAvatarButton";
+import { UserContext } from "@/app/context/UserContext";
 import { useRouter } from "expo-router";
+import { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 export default function QuizHomePage() {
+  const { user } = useContext(UserContext);
   const router = useRouter();
 
   return (
@@ -11,7 +14,7 @@ export default function QuizHomePage() {
 
       <CustomAvatarButton title={"Start quiz"} onPress={() => router.push("/quiz/startquiz")} />
 
-      <CustomAvatarButton title={"Add your own questions"} onPress={() => router.push("/quiz/addquestions")} />
+      { user ? <CustomAvatarButton title={"Add your own questions"} onPress={() => router.push("/quiz/addquestions")} /> : "" }
     </View>
   );
 }

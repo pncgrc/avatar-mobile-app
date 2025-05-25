@@ -13,45 +13,6 @@ export interface ShowInfoProps {
   creators: Creator[];
 }
 
-export interface CharacterDataW {
-  id: number;
-  name: string;
-  image: string;
-  bio: {
-    alternativeNames: string[];
-    nationality: string;
-    ethnicity: string;
-    ages: string | string[];
-    born: string;
-    died: string[];
-  };
-  physicalDescription: {
-    gender: string;
-    eyeColor: string;
-    hairColor: string;
-    skinColor: string;
-  };
-  personalInformation: {
-    loveInterst: string;
-    allies: string[];
-    enemies: string[];
-    weaponsOfChoice: string[];
-    fightingStyles: string[];
-  };
-  politicalInformation: {
-    profession: string[];
-    position: string[];
-    predecessor: string;
-    successor: string;
-    affiliations: string[];
-  };
-  chronologicalInformation: {
-    firstAppearance: string;
-    lastAppearance: string[];
-    voicedBy: string[];
-  };
-};
-
 export interface CharacterCardBasicProps {
   id: number;
   name: string;
@@ -107,10 +68,10 @@ export interface User {
   username: string;
   avatarUrl: string;
   quizPoints: number;
+  submittedQuestions?: QuizQuestions[];
 }
 
 export interface QuizQuestions {
-  id: number;
   question: string;
   possibleAnsers: string[];
   correctAnswer: string;
@@ -125,6 +86,13 @@ export interface QuizCardProps {
 	onSelect: (answer: string) => void;
 	questionNumber: number;
 	totalQuestions: number;
+};
+
+export interface UserContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  login: (username: string) => Promise<void>;
+  logout: () => Promise<void>;
 };
 
 export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Nomad";

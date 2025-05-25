@@ -6,8 +6,8 @@ import { QuizQuestions } from "../types";
 
 export default function StartQuizScreen() {
 	const { user, setUser } = useContext(UserContext);
-    const [data, setData] = useState<QuizQuestions[]>([]);
-    const [quizData, setQuizData] = useState<QuizQuestions[]>([]);
+  const [data, setData] = useState<QuizQuestions[]>([]);
+  const [quizData, setQuizData] = useState<QuizQuestions[]>([]);
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
 	const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
 	const [showAnswerFeedback, setShowAnswerFeedback] = useState<boolean>(false);
@@ -19,7 +19,7 @@ export default function StartQuizScreen() {
     useEffect(() => {
         const headers = {
           Authorization:
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMwODAwMzdAYXAuYmUiLCJpYXQiOjE3NDc1OTQ2NDJ9.KFzP5GcRHmXdTRgx6lqO_JE-DyKgn7SZf7UP0E84Rvg",
+            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InMwODAwMzdAYXAuYmUiLCJpYXQiOjE3NDc1OTQ2NDJ9.KFzP5GcRHmXdTRgx6lqO_JE-DyKgn7SZf7UP0E84Rvg",
         };
         const baseURL = "https://sampleapis.assimilate.be/avatar/questions";
     
@@ -32,12 +32,10 @@ export default function StartQuizScreen() {
     }, []);
 
     const chooseQuestions = (data: QuizQuestions[]): QuizQuestions[] => {
-        const arrayBaseLength = 35; // static length where system questions end
-        const totalQuestions = 6;
+        const arrayBaseLength = 34;
         const chosenIndexes = new Set<number>();
         let tempArray: QuizQuestions[] = [];
 
-        // Pick first totalQuestions - 1 questions from system questions (first part)
         for (let i = 1; i < totalQuestions; i++) {
             let randomIndex = Math.floor(Math.random() * arrayBaseLength);
 
@@ -49,7 +47,6 @@ export default function StartQuizScreen() {
             tempArray.push(data[randomIndex]);
         }
 
-        // Pick last question from user-generated questions (after arrayBaseLength)
         if (data.length > arrayBaseLength) {
             let lastQuestionIndex = Math.floor(Math.random() * (data.length - (arrayBaseLength + 1)) ) + (arrayBaseLength + 1);
 
@@ -60,7 +57,6 @@ export default function StartQuizScreen() {
             chosenIndexes.add(lastQuestionIndex);
             tempArray.push(data[lastQuestionIndex]);
         } else {
-            // fallback if no user-generated questions exist
             let randomIndex = Math.floor(Math.random() * arrayBaseLength);
 
             while (chosenIndexes.has(randomIndex)) {

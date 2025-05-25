@@ -1,8 +1,8 @@
 import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
-export default function CustomAvatarButton({ title, style, onPress }: { title: string; style?: StyleProp<ViewStyle>; onPress?: () => void }) {
+export default function CustomAvatarButton({ title, style, onPress, disabled }: { title: string; style?: StyleProp<ViewStyle>; onPress?: () => void; disabled?: boolean }) {
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.button, style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.button, style]} disabled={disabled}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
