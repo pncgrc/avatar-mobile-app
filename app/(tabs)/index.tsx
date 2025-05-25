@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
-import { ShowInfoProps } from "../../types";
+import { ShowInfoProps } from "../types";
 
-export default function Index() {
+export default function Home() {
   const [data, setData] = useState<ShowInfoProps[]>([]);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { CharacterCardDetailProps, Nation, NationTheme } from "@/types";
+import { CharacterCardDetailProps, Nation, NationTheme } from "@/app/types";
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text } from "react-native";
 import UnorderedList from "./UnorderedList";
@@ -66,24 +66,24 @@ const CharacterCardDetail = ({characterCardDetailProps}: {characterCardDetailPro
 const styles = StyleSheet.create({
   card: {
     flexDirection: "column",
-    backgroundColor: "#F8F1E3", // warmer parchment tone
+    backgroundColor: "#F8F1E3",
     padding: 24,
     shadowColor: "#3B1F00",
     shadowOpacity: 0.25,
     shadowRadius: 10,
     shadowOffset: { width: 0, height: 4 },
     elevation: 6,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: "#A67B5B",
   },
   image: {
     width: 350,
-    height: 270,
+    height: 260,
     borderRadius: 12,
     alignSelf: "center",
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: "#CBB08A", // aged scroll look
+    borderWidth: 5,
+    borderColor: "#CBB08A",
   },
   name: {
     fontSize: 36,
@@ -92,6 +92,8 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginTop: 10,
     marginBottom: 25,
+    padding: 5,
+    paddingLeft: 15,
     fontFamily: "serif",
     letterSpacing: 0.8,
   },
@@ -103,6 +105,7 @@ const styles = StyleSheet.create({
     marginTop: 18,
     fontFamily: "serif",
     letterSpacing: 0.5,
+    padding: 5,
   },
   label: {
     fontSize: 17,
@@ -121,37 +124,34 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-
 const nationThemes: Record<Nation | "default", NationTheme> = {
   "Fire Nation": {
     card: { backgroundColor: "#4B0C0C", borderColor: "#FF5C38" },
-    name: { color: "#FFF3E6" },
+    name: { color: "#FFF3E6", borderWidth: 5, borderColor: "#CBB08A", borderRadius: 2 },
     label: { color: "#FFB49E" },
     value: { color: "#FFEEDD" },
   },
   "Earth Kingdom": {
     card: { backgroundColor: "#263A28", borderColor: "#B5D67E" },
-    name: { color: "#F9FFE5" },
+    name: { color: "#F9FFE5", borderWidth: 5, borderColor: "#CBB08A", borderRadius: 2 },
     label: { color: "#D4F3A5" },
     value: { color: "#F0FFE0" },
   },
   "Water Tribe": {
     card: { backgroundColor: "#122E4A", borderColor: "#70C3FF" },
-    name: { color: "#E8F9FF" },
+    name: { color: "#E8F9FF", borderWidth: 5, borderColor: "#CBB08A", borderRadius: 2 },
     label: { color: "#BDEBFF" },
     value: { color: "#E5F8FF" },
   },
   "Air Nomad": {
     card: { backgroundColor: "#FFF9E5", borderColor: "#FFD480" },
-    name: { color: "#5D4037" },
+    name: { color: "#5D4037", borderWidth: 5, borderColor: "#CBB08A", borderRadius: 10},
     label: { color: "#6D4C41" },
     value: { color: "#3E2723" },
   },
   default: {
     card: { backgroundColor: "#F5F2EB", borderColor: "#CBAF87" },
-    name: { color: "#2E1C0F" },
+    name: { color: "#2E1C0F", borderWidth: 5, borderColor: "#CBB08A", borderRadius: 2 },
     label: { color: "#5B4646" },
     value: { color: "#1A110D" },
   },

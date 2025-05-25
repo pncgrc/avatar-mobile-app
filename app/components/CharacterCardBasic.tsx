@@ -1,4 +1,4 @@
-import { CharacterCardBasicProps, Nation, NationTheme } from "@/types";
+import { CharacterCardBasicProps, Nation, NationTheme } from "@/app/types";
 import { Link } from "expo-router";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
@@ -79,30 +79,27 @@ const styles = StyleSheet.create({
   },
 });
 
-
-
-
 const nationThemes: Record<Nation | "default", NationTheme> = {
   "Fire Nation": {
     card: { backgroundColor: "#4B0C0C", borderColor: "#FF5C38" },
-    name: { color: "#FFF4E6" },
+    name: { color: "#FFF3E6" },
     label: { color: "#FFB49E" },
     value: { color: "#FFEEDD" },
   },
   "Earth Kingdom": {
-    card: { backgroundColor: "#2A3B2C", borderColor: "#B5D67E" },
+    card: { backgroundColor: "#263A28", borderColor: "#B5D67E" },
     name: { color: "#F9FFE5" },
     label: { color: "#D4F3A5" },
     value: { color: "#F0FFE0" },
   },
   "Water Tribe": {
-    card: { backgroundColor: "#123552", borderColor: "#70C3FF" },
-    name: { color: "#E8F9FF" },
+    card: { backgroundColor: "#122E4A", borderColor: "#70C3FF" },
+    name: { color: "#E8F9FF", },
     label: { color: "#BDEBFF" },
     value: { color: "#E5F8FF" },
   },
   "Air Nomad": {
-    card: { backgroundColor: "#FFF7E2", borderColor: "#FFD480" },
+    card: { backgroundColor: "#FFF9E5", borderColor: "#FFD480" },
     name: { color: "#5D4037" },
     label: { color: "#6D4C41" },
     value: { color: "#3E2723" },

@@ -1,8 +1,10 @@
+import { UserProvider } from "@/app/context/UserContext";
 import { Tabs } from "expo-router";
+import React from "react";
 
 export default function RootLayout() {
   return (
-    <>
+    <UserProvider>
       <Tabs>
         <Tabs.Screen
           name="index"
@@ -25,10 +27,14 @@ export default function RootLayout() {
             headerShown: false,
           }}
         />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profile",
+            headerShown: false,
+          }}
+        />
       </Tabs>
-    </>
-  
-  
-);
-  
+    </UserProvider>
+  );
 }

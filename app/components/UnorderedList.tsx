@@ -1,5 +1,5 @@
 import { Text, View } from "react-native";
-import { UnorderedListProps } from "../../types";
+import { UnorderedListProps } from "../types";
 
 
 

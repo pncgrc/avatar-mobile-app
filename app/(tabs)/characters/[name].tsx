@@ -1,5 +1,5 @@
 import CharacterCardDetail from "@/app/components/CharacterCardDetail";
-import { CharacterCardDetailProps } from "@/types";
+import { CharacterCardDetailProps } from "@/app/types";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Text, View } from "react-native";

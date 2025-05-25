@@ -103,11 +103,35 @@ export interface UnorderedListProps {
   alternateInfo: string; 
 };
 
+export interface User {
+  username: string;
+  avatarUrl: string;
+  quizPoints: number;
+}
+
+export interface QuizQuestions {
+  id: number;
+  question: string;
+  possibleAnsers: string[];
+  correctAnswer: string;
+}
+
+export interface QuizCardProps {
+	question: string;
+	answers: string[];
+	correctAnswer: string;
+	selectedAnswer: string | null;
+	showFeedback: boolean;
+	onSelect: (answer: string) => void;
+	questionNumber: number;
+	totalQuestions: number;
+};
+
 export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Nomad";
 
 export type NationTheme = {
   card: { backgroundColor: string; borderColor: string };
-  name: { color: string };
+  name: { color: string, borderWidth?: number, borderColo?: string, borderRadius?: number, };
   label: { color: string };
   value: { color: string };
 };

@@ -1,14 +1,8 @@
 import CharacterCardBasic from "@/app/components/CharacterCardBasic";
-import { CharacterCardBasicProps } from "@/types";
+import { CharacterCardBasicProps } from "@/app/types";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 
 export default function CharactersPage() {
   const [data, setData] = useState<CharacterCardBasicProps[]>([]);
@@ -76,7 +70,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    backgroundColor: "#fff",
+    backgroundColor: "#F0E7D8",
   },
   title: {
     fontSize: 35,
