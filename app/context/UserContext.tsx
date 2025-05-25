@@ -9,6 +9,8 @@ export const UserContext = createContext<UserContextType>({
   setUser: () => {},
   login: async () => {},
   logout: async () => {},
+  incrementQuizPoints: async () => {},
+  saveUser:  async () => {}
 });
 
 export function UserProvider({ children }: { children: ReactNode }) {
@@ -45,8 +47,24 @@ export function UserProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
+  const saveUser = async (updatedUser: User) => {
+    await AsyncStorage.setItem(`user:${updatedUser.username}`, JSON.stringify(updatedUser));
+    await AsyncStorage.setItem("currentUser", JSON.stringify(updatedUser));
+    setUser(updatedUser);
+  };
+
+  const incrementQuizPoints = async (points: number) => {
+    if (user) {
+      const updatedUser = {
+        ...user,
+        quizPoints: user.quizPoints + points,
+      };
+      await saveUser(updatedUser);
+    }
+  };
+
   return (
-    <UserContext.Provider value={{ user, setUser, login, logout, }}>
+    <UserContext.Provider value={{ user, setUser, login, logout, incrementQuizPoints, saveUser }}>
       {children}
     </UserContext.Provider>
   );

@@ -93,6 +93,8 @@ export interface UserContextType {
   setUser: (user: User | null) => void;
   login: (username: string) => Promise<void>;
   logout: () => Promise<void>;
+  incrementQuizPoints: (points: number) => Promise<void>;
+  saveUser: (updatedUser: User) => Promise<void>;
 };
 
 export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Nomad";

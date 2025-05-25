@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0E7D8",
   },
   questionContainer: {
-    height: height * 0.35,
+    height: height * 0.25,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,

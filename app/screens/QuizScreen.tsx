@@ -1,11 +1,11 @@
 import QuizCard from "@/app/components/QuizCard";
 import { UserContext } from "@/app/context/UserContext";
+import { QuizQuestions } from "@/app/types";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { QuizQuestions } from "../types";
 
 export default function StartQuizScreen() {
-	const { user, setUser } = useContext(UserContext);
+	const { user, setUser, incrementQuizPoints } = useContext(UserContext);
   const [data, setData] = useState<QuizQuestions[]>([]);
   const [quizData, setQuizData] = useState<QuizQuestions[]>([]);
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -75,14 +75,6 @@ export default function StartQuizScreen() {
     if (!quizData.length || !quizData[currentIndex]) return null;
 	const currentQuestion = quizData[currentIndex];
 
-	const incrementQuizPoints = (points: number) => {
-		if (user) {
-			setUser({
-				...user,
-				quizPoints: user.quizPoints + points
-			});
-		}
-	};
 
 	const handleSelect = (answer: string) => {
 		if (showAnswerFeedback) return;
@@ -95,7 +87,7 @@ export default function StartQuizScreen() {
 		if (isCorrect) {
 			setCorrectCount((prev) => prev + 1);
 			setEarnedPoints((prev) => prev + 10);
-            incrementQuizPoints(10);
+      incrementQuizPoints(10);
 		}
 
 		setTimeout(() => {

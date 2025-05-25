@@ -6,7 +6,7 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, View } from "react-nati
 import CustomAvatarButton from "../components/CustomAvatarButton";
 
 export default function AddQuestionsScreen() {
-  const { user, setUser } = useContext(UserContext);
+  const { user, saveUser } = useContext(UserContext);
   const [question, setQuestion] = useState("");
   const [answers, setAnswers] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");
@@ -64,10 +64,12 @@ export default function AddQuestionsScreen() {
 
       Alert.alert("Success", "Question submitted!");
       if (user) {
-        setUser({
+        const updatedUser = {
           ...user,
           submittedQuestions: [...(user.submittedQuestions ?? []), newQuestion],
-        });
+        };
+
+        await saveUser(updatedUser);
       }
       setQuestion("");
       setAnswers(["", "", "", ""]);
