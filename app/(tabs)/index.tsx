@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { ShowInfoProps } from "../types";
 
 export default function Home() {
@@ -20,7 +20,7 @@ export default function Home() {
     }, []);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
 
       {data.length !== 0 ? (
         <>
@@ -38,7 +38,7 @@ export default function Home() {
           <Text>Loading...</Text>
         )}
       
-    </View>
+    </ScrollView>
   );
 };
 

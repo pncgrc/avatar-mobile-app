@@ -1,38 +1,123 @@
+import CustomAvatarButton from '@/app/components/CustomAvatarButton';
+import SubmittedQuestionCard from '@/app/components/SubmittedQuestionCard';
 import { funEmoji } from '@dicebear/collection';
 import { createAvatar } from '@dicebear/core';
-import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import * as ImagePicker from 'expo-image-picker';
+import React, { useContext, useEffect, useState } from "react";
+import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import { SvgXml } from 'react-native-svg';
-import CustomAvatarButton from '../components/CustomAvatarButton';
 import { UserContext } from "../context/UserContext";
 
 export default function UserScreen() {
-  const { user, logout } = useContext(UserContext);
-   const avatar = createAvatar(funEmoji, {
+  const { user, logout, saveUser } = useContext(UserContext);
+  const [localImage, setLocalImage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (user?.avatarUrl) {
+      setLocalImage(user.avatarUrl);
+    } else {
+      setLocalImage(null);
+    }
+  }, [user?.avatarUrl]);
+
+  const avatar = createAvatar(funEmoji, {
     seed: user?.username,
   }).toString();
 
   if (!user) return null;
 
+  const pickImage = async () => {
+    const response = await new Promise<"camera" | "library" | "cancel">((resolve) => {
+      Alert.alert(
+        "Update Profile Picture",
+        "Choose an option",
+        [
+          { text: "Cancel", onPress: () => resolve("cancel"), style: "cancel" },
+          { text: "Take Photo", onPress: () => resolve("camera") },
+          { text: "Choose from Library", onPress: () => resolve("library") },
+          
+        ],
+        { cancelable: true }
+      );
+    });
+
+    if (response === "cancel") return;
+
+    if (response === "library") {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission needed", "Permission to access media library is required!");
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: "images",
+        quality: 0.7,
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+
+      if (!result.canceled && result.assets.length > 0) {
+        const selectedUri = result.assets[0].uri;
+        setLocalImage(selectedUri);
+        const updatedUser = { ...user!, avatarUrl: selectedUri };
+        await saveUser(updatedUser);
+      }
+    }
+
+    if (response === "camera") {
+      const { status } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status !== "granted") {
+        Alert.alert("Permission needed", "Permission to access camera is required!");
+        return;
+      }
+
+      const result = await ImagePicker.launchCameraAsync({
+        quality: 0.7,
+        allowsEditing: true,
+        aspect: [1, 1],
+      });
+
+      if (!result.canceled && result.assets.length > 0) {
+        const selectedUri = result.assets[0].uri;
+        setLocalImage(selectedUri);
+        const updatedUser = { ...user!, avatarUrl: selectedUri };
+        await saveUser(updatedUser);
+      }
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.content}>
+      <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.title}>Welcome, {user.username}!</Text>
-        <SvgXml xml={avatar} style={{ width: 100, height: 100, alignSelf: "center", marginBottom: 15 }}/>
-        <Text style={styles.text}>Quiz points: <Text style={styles.bold}>{user.quizPoints}</Text></Text>
-        {user.submittedQuestions?.length !== undefined && user.submittedQuestions?.length > 0 ? <Text style={styles.heading}>Submitted questions</Text>: ""}
-        {user.submittedQuestions?.map((q, index) => (
-          <View key={index} style={styles.questionContainer}>
-            <Text style={styles.text}>Question: <Text style={styles.bold}>{q.question}</Text></Text> 
-            <Text style={styles.text}>Correct Answer: <Text style={styles.bold}>{q.correctAnswer}</Text></Text>
-          </View>      
-        ))}
-      </View>
-      <CustomAvatarButton title={"Log out"} onPress={logout} style={styles.buttonWrapper}/>
-      
+
+        {user.avatarUrl.startsWith("http") ? (          
+          <SvgXml xml={avatar} style={styles.avatarSvg}/>
+        ) : (
+          <Image source={{ uri: localImage! }} style={styles.avatarImage} />
+        )}
+
+        <CustomAvatarButton title="Change Profile Picture" onPress={pickImage} />
+
+        <Text style={styles.text}>
+          Quiz points: <Text style={styles.bold}>{user.quizPoints}</Text>
+        </Text>
+
+        {user.submittedQuestions?.length ? (
+          <>
+            <Text style={styles.heading}>Submitted questions</Text>
+            {user.submittedQuestions.map((q, index) => (
+              <SubmittedQuestionCard key={index} question={q.question} correctAnswer={q.correctAnswer} />
+            ))}
+          </>
+        ) : null}
+      </ScrollView>
+
+      <CustomAvatarButton title="Log out" onPress={logout} style={styles.buttonWrapper} />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -43,7 +128,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "flex-start",
   },
   title: {
     fontSize: 35,
@@ -53,6 +137,20 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     fontFamily: "serif",
     marginBottom: 25,
+  },
+  avatarSvg: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: "center",
+    marginBottom: 15,
+  },
+  avatarImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 50,
+    alignSelf: "center",
+    marginBottom: 15,
   },
   heading: {
     fontSize: 25,
@@ -70,7 +168,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   bold: {
-    fontWeight: 700,
+    fontWeight: "700",
   },
   buttonWrapper: {
     justifyContent: "flex-end",
@@ -87,5 +185,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
-  }
+  },
 });
