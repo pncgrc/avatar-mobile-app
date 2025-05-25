@@ -1,4 +1,4 @@
-# Welcome to my React Native app 👋
+# Welcome to my Avatar: The Last Airbender React Native app 👋
 
 ## Notes
 
@@ -29,3 +29,4 @@
 6. Also the ability to remove them from favorites either on the respective character cards (both detail and basic) and on the user profile
 7. Cleaning up my code!
 8. Styling changes: I haven't managed to make the app look NOT boring.
+9. The ability to change from light to dark theme
