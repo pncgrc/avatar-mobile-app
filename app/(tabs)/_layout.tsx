@@ -3,10 +3,12 @@ import { faHouse, faPeopleGroup, faQuestion, faUser } from '@fortawesome/free-so
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Tabs } from "expo-router";
 import React from "react";
+import { StatusBar } from "react-native";
 
 export default function RootLayout() {
   return (
     <UserProvider>
+      <StatusBar backgroundColor="#F0E7D8" barStyle="dark-content" />
       <Tabs screenOptions={{ 
         tabBarActiveTintColor: "#3E2C23",
         tabBarStyle: {
