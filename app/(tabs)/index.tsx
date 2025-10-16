@@ -1,9 +1,16 @@
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
 import { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { ShowInfoProps } from "../types";
+
+
 
 export default function Home() {
   const [data, setData] = useState<ShowInfoProps[]>([]);
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular
+  });
 
   useEffect(() => {
     const headers = {
@@ -19,8 +26,12 @@ export default function Home() {
       });
   }, []);
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={styles.container}>
       {data.length !== 0 ? (
         <>
           <Image
@@ -39,32 +50,30 @@ export default function Home() {
       ) : (
         <Text>Loading...</Text>
       )}
-    </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 25,
+    flex: 1,
+    justifyContent: "space-between",
     backgroundColor: "#F0E7D8",
-    alignItems: "center",
   },
   image: {
     width: 350,
     height: 200,
-    marginBottom: 50,
   },
   text: {
     color: "#3E2C23",
-    fontSize: 17,
-    fontFamily: "sans-serif",
-    marginBottom: 40,
-    alignSelf: "center",
+    fontFamily: "SawarabiMincho_400Regular",
+    fontSize: 18,
+    lineHeight: 25
   },
   footerText: {
     color: "#3E2C23",
-    fontSize: 14,
-    marginTop: 20,
-    alignSelf: "center",
-  },
+    fontFamily: "SawarabiMincho_400Regular",
+    fontSize: 18,
+  }
 });

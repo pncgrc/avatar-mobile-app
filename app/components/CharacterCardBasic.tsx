@@ -1,4 +1,7 @@
 import { CharacterCardBasicProps, Nation, NationTheme } from "@/app/types";
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
+import { ZhiMangXing_400Regular } from '@expo-google-fonts/zhi-mang-xing/400Regular';
 import { Link } from "expo-router";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text } from "react-native";
@@ -6,11 +9,19 @@ import UnorderedList from "./UnorderedList";
 
 const CharacterCard = ({characterCardBasicProps, onPress}: {characterCardBasicProps: CharacterCardBasicProps, onPress?: () => void;}) => {
 
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular,
+    ZhiMangXing_400Regular
+  });
   const nationTheme = getNationTheme(characterCardBasicProps.bio.nationality, characterCardBasicProps.bio.ethnicity);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <Pressable style={[styles.card, nationTheme.card]} onPress={onPress}>
-        <Image source={{uri: characterCardBasicProps.image}} style={styles.image} resizeMode="contain" />
+        <Image source={{uri: characterCardBasicProps.image}} style={styles.image} />
         <Link style={[styles.name, nationTheme.name]} href={`/characters/${characterCardBasicProps.name}`}>{characterCardBasicProps.name}</Link>
         <Text style={[styles.label, nationTheme.label]}>Nationality: <Text style={[styles.value, nationTheme.value]}>{characterCardBasicProps.bio.nationality}</Text></Text>
         <Text style={[styles.label, nationTheme.label]}>Age:{" "}        
@@ -32,7 +43,7 @@ const CharacterCard = ({characterCardBasicProps, onPress}: {characterCardBasicPr
 const styles = StyleSheet.create({
   card: {
     flexDirection: "column",
-    backgroundColor: "#F8F1E3", // softer parchment tone
+    backgroundColor: "#F8F1E3",
     padding: 24,
     shadowColor: "#3B1F00",
     shadowOpacity: 0.25,
@@ -45,36 +56,33 @@ const styles = StyleSheet.create({
     marginBottom: 24,
   },
   image: {
-    width: 320,
-    height: 240,
+    width: "100%",
+    height: 250,
     borderRadius: 12,
     alignSelf: "center",
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#CBB08A", // aged scroll edge
+    borderColor: "#CBB08A",
   },
   name: {
-    fontSize: 28,
-    fontWeight: "700",
+    fontFamily: "ZhiMangXing_400Regular",
+    fontSize: 45,
     color: "#3E2C1C",
     textAlign: "center",
     marginVertical: 10,
-    fontFamily: "serif", // consider a stylized Asian font if possible
     letterSpacing: 0.5,
   },
   label: {
+    fontFamily: "sans-serif",
     fontSize: 17,
     color: "#5C3A21",
-    fontWeight: "600",
     marginTop: 16,
-    fontFamily: "sans-serif",
     letterSpacing: 0.4,
   },
   value: {
     color: "#2A1C0F",
-    fontWeight: "700",
-    fontSize: 16,
-    fontFamily: "sans-serif",
+    fontFamily: "SawarabiMincho_400Regular",
+    fontSize: 18,
     marginTop: 4,
   },
 });
@@ -124,37 +132,5 @@ const getNationTheme = (nationality: string, ethnicity: string): NationTheme => 
     return nationThemes[ethnicity as Nation] || nationThemes.default;
   }
 };
-
-
-/*const styles = StyleSheet.create({
-  card: {
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    padding: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    marginBottom: 15,
-    elevation: 3,
-    borderRadius: 15,
-  },
-  image: {
-    width: 320,
-    height: 320,
-    alignSelf: "center",
-  },
-  name: {
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-  label: {
-    fontSize: 14,
-    color: "#555",
-  },
-  value: {
-    color: "#000",
-    fontWeight: 600,
-  },
-});*/
 
 export default CharacterCard;

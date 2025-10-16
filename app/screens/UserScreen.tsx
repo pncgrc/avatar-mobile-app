@@ -2,6 +2,8 @@ import CustomAvatarButton from '@/app/components/CustomAvatarButton';
 import SubmittedQuestionCard from '@/app/components/SubmittedQuestionCard';
 import { funEmoji } from '@dicebear/collection';
 import { createAvatar } from '@dicebear/core';
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useContext, useEffect, useState } from "react";
 import { Alert, Image, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -11,6 +13,9 @@ import { UserContext } from "../context/UserContext";
 export default function UserScreen() {
   const { user, logout, saveUser } = useContext(UserContext);
   const [localImage, setLocalImage] = useState<string | null>(null);
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular
+  });
 
   useEffect(() => {
     if (user?.avatarUrl) {
@@ -26,15 +31,19 @@ export default function UserScreen() {
 
   if (!user) return null;
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
   const pickImage = async () => {
     const response = await new Promise<"camera" | "library" | "cancel">((resolve) => {
       Alert.alert(
-        "Update Profile Picture",
+        "Update profile picture",
         "Choose an option",
         [
           { text: "Cancel", onPress: () => resolve("cancel"), style: "cancel" },
-          { text: "Take Photo", onPress: () => resolve("camera") },
-          { text: "Choose from Library", onPress: () => resolve("library") },
+          { text: "Take photo", onPress: () => resolve("camera") },
+          { text: "Choose from library", onPress: () => resolve("library") },
           
         ],
         { cancelable: true }
@@ -98,7 +107,7 @@ export default function UserScreen() {
           <Image source={{ uri: localImage! }} style={styles.avatarImage} />
         )}
 
-        <CustomAvatarButton title="Change Profile Picture" onPress={pickImage} />
+        <CustomAvatarButton title="Change profile picture" onPress={pickImage} />
 
         <Text style={styles.text}>
           Quiz points: <Text style={styles.bold}>{user.quizPoints}</Text>
@@ -107,9 +116,11 @@ export default function UserScreen() {
         {user.submittedQuestions?.length ? (
           <>
             <Text style={styles.heading}>Submitted questions</Text>
-            {user.submittedQuestions.map((q, index) => (
-              <SubmittedQuestionCard key={index} question={q.question} correctAnswer={q.correctAnswer} />
-            ))}
+            <ScrollView>
+              {user.submittedQuestions.map((q, index) => (
+                <SubmittedQuestionCard key={index} question={q.question} correctAnswer={q.correctAnswer} />
+              ))}
+            </ScrollView>
           </>
         ) : null}
       </ScrollView>
@@ -130,12 +141,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
+    fontFamily: "SawarabiMincho_400Regular",
     fontSize: 35,
-    fontWeight: "700",
     color: "#3E2C1C",
     textAlign: "center",
     marginVertical: 8,
-    fontFamily: "serif",
     marginBottom: 25,
   },
   avatarSvg: {
@@ -153,12 +163,11 @@ const styles = StyleSheet.create({
     marginBottom: 15,
   },
   heading: {
+    fontFamily: "SawarabiMincho_400Regular",
     fontSize: 25,
-    fontWeight: "700",
     color: "#3E2C1C",
     textAlign: "center",
     marginVertical: 8,
-    fontFamily: "serif",
   },
   text: {
     color: "#3E2C23",

@@ -38,7 +38,7 @@ export default function QuizCard({
 							key={index}
 							title={answer}
 							onPress={() => onSelect(answer)}
-							style={[styles.answerButton, backgroundColor ? { backgroundColor } : {}]}
+							style={[ backgroundColor ? { backgroundColor } : {}]}
 						/>
 					);
 				})}
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    paddingVertical: 30,
     paddingHorizontal: 30,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: -2 },
@@ -87,8 +86,5 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 10,
     justifyContent: "space-evenly",
-  },
-  answerButton: {
-    paddingVertical: 14,
-  },
+  }
 });

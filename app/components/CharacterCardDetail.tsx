@@ -1,16 +1,28 @@
 import { CharacterCardDetailProps, Nation, NationTheme } from "@/app/types";
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
+import { ZhiMangXing_400Regular } from '@expo-google-fonts/zhi-mang-xing/400Regular';
 import React from "react";
 import { Image, ScrollView, StyleSheet, Text } from "react-native";
 import UnorderedList from "./UnorderedList";
 
 const CharacterCardDetail = ({characterCardDetailProps}: {characterCardDetailProps: CharacterCardDetailProps}) => {
 
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular,
+    ZhiMangXing_400Regular
+  });
+
   const nationTheme = getNationTheme(characterCardDetailProps.bio.nationality, characterCardDetailProps.bio.ethnicity);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <ScrollView style={[styles.card, nationTheme.card]} key={characterCardDetailProps.id}>
       <Text style={[styles.name, nationTheme.name]}>{characterCardDetailProps.name}</Text>
-      <Image source={{uri: characterCardDetailProps.image}} style={styles.image} resizeMode="contain" />
+      <Image source={{uri: characterCardDetailProps.image}} style={styles.image} />
 
       <Text style={[styles.title, nationTheme.name]}>Bio</Text>
 
@@ -77,8 +89,8 @@ const styles = StyleSheet.create({
     borderColor: "#A67B5B",
   },
   image: {
-    width: 350,
-    height: 260,
+    width: "100%",
+    height: 250,
     borderRadius: 12,
     alignSelf: "center",
     marginBottom: 16,
@@ -86,24 +98,22 @@ const styles = StyleSheet.create({
     borderColor: "#CBB08A",
   },
   name: {
-    fontSize: 36,
-    fontWeight: "700",
+    fontFamily: "ZhiMangXing_400Regular",
+    fontSize: 50,
     color: "#3E2C1C",
     textAlign: "left",
     marginTop: 10,
     marginBottom: 25,
     padding: 5,
     paddingLeft: 15,
-    fontFamily: "serif",
     letterSpacing: 0.8,
   },
   title: {
-    fontSize: 26,
-    fontWeight: "700",
+    fontFamily: "SawarabiMincho_400Regular",
+    fontSize: 25,
     color: "#3E2C1C",
     textAlign: "left",
     marginTop: 18,
-    fontFamily: "serif",
     letterSpacing: 0.5,
     padding: 5,
   },
@@ -116,11 +126,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.3,
   },
   value: {
+    fontFamily: "SawarabiMincho_400Regular",
     color: "#2A1C0F",
-    fontWeight: "700",
-    fontSize: 16,
+    fontSize: 18,
     marginTop: 4,
-    fontFamily: "sans-serif",
   },
 });
 
@@ -169,37 +178,5 @@ const getNationTheme = (nationality: string, ethnicity: string): NationTheme => 
     return nationThemes[ethnicity as Nation] || nationThemes.default;
   }
 };
-
-
-/*const styles = StyleSheet.create({
-  card: {
-    flexDirection: "column",
-    backgroundColor: "#fff",
-    padding: 20,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    marginBottom: 15,
-    elevation: 3,
-    borderRadius: 15,
-  },
-  image: {
-    width: 320,
-    height: 320,
-    alignSelf: "center",
-  },
-  name: {
-    fontSize: 25,
-    fontWeight: "bold",
-  },
-  label: {
-    fontSize: 14,
-    color: "#555",
-  },
-  value: {
-    color: "#000",
-    fontWeight: 600,
-  },
-});*/
 
 export default CharacterCardDetail;

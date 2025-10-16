@@ -101,7 +101,7 @@ export type Nation = "Fire Nation" | "Earth Kingdom" | "Water Tribe" | "Air Noma
 
 export type NationTheme = {
   card: { backgroundColor: string; borderColor: string };
-  name: { color: string, borderWidth?: number, borderColo?: string, borderRadius?: number, };
+  name: { color: string, borderWidth?: number, borderColor?: string, borderRadius?: number, };
   label: { color: string };
   value: { color: string };
 };

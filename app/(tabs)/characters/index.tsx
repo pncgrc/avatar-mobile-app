@@ -1,5 +1,7 @@
 import CharacterCardBasic from "@/app/components/CharacterCardBasic";
 import { CharacterCardBasicProps } from "@/app/types";
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
@@ -8,6 +10,9 @@ export default function CharactersPage() {
   const [data, setData] = useState<CharacterCardBasicProps[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredData, setFilteredData] = useState<CharacterCardBasicProps[]>([]);
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular
+  });
 
   const router = useRouter();
 
@@ -36,6 +41,10 @@ export default function CharactersPage() {
     });
     setFilteredData(results);
   }, [searchQuery, data]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
@@ -73,12 +82,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#F0E7D8",
   },
   title: {
+    fontFamily: "SawarabiMincho_400Regular",
     fontSize: 35,
-    fontWeight: "700",
-    color: "#3E2C1C", // dark brown for a calligraphic feel
+    color: "#3E2C1C",
     textAlign: "center",
     marginVertical: 8,
-    fontFamily: "serif",
     marginBottom: 25,
   },
   input: {
@@ -89,5 +97,6 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     paddingHorizontal: 12,
     marginBottom: 10,
+    fontFamily: "SawarabiMincho_400Regular",
   },
 });

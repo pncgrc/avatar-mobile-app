@@ -1,11 +1,14 @@
 import QuizCard from "@/app/components/QuizCard";
 import { UserContext } from "@/app/context/UserContext";
 import { QuizQuestions } from "@/app/types";
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
+import { router } from "expo-router";
 import React, { useContext, useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 
 export default function StartQuizScreen() {
-	const { user, setUser, incrementQuizPoints } = useContext(UserContext);
+	const { incrementQuizPoints } = useContext(UserContext);
   const [data, setData] = useState<QuizQuestions[]>([]);
   const [quizData, setQuizData] = useState<QuizQuestions[]>([]);
 	const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -14,7 +17,10 @@ export default function StartQuizScreen() {
 	const [correctCount, setCorrectCount] = useState<number>(0);
 	const [quizEnded, setQuizEnded] = useState<boolean>(false);
 	const [earnedPoints, setEarnedPoints] = useState<number>(0);
-    const totalQuestions: number = 6;
+  const totalQuestions: number = 6;
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular
+  });
 
     useEffect(() => {
         const headers = {
@@ -32,7 +38,7 @@ export default function StartQuizScreen() {
     }, []);
 
     const chooseQuestions = (data: QuizQuestions[]): QuizQuestions[] => {
-        const arrayBaseLength = 34;
+        const arrayBaseLength = 35;
         const chosenIndexes = new Set<number>();
         let tempArray: QuizQuestions[] = [];
 
@@ -48,10 +54,10 @@ export default function StartQuizScreen() {
         }
 
         if (data.length > arrayBaseLength) {
-            let lastQuestionIndex = Math.floor(Math.random() * (data.length - (arrayBaseLength + 1)) ) + (arrayBaseLength + 1);
+            let lastQuestionIndex = Math.floor(Math.random() * (data.length - arrayBaseLength)) + arrayBaseLength;
 
             while (chosenIndexes.has(lastQuestionIndex)) {
-                lastQuestionIndex = Math.floor(Math.random() * (data.length - (arrayBaseLength + 1))) + (arrayBaseLength + 1);
+                lastQuestionIndex = Math.floor(Math.random() * (data.length - arrayBaseLength)) + arrayBaseLength;
             }
 
             chosenIndexes.add(lastQuestionIndex);
@@ -101,15 +107,20 @@ export default function StartQuizScreen() {
 		}, 1500);
 	};
 
+  if (!fontsLoaded) {
+    return null;
+  }
+
 	if (quizEnded) {
 		return (
-			<View style={styles.resultContainer}>
+			<Pressable style={styles.resultContainer} onPress={() => router.push("/quiz")}>
 				<Text style={styles.resultTitle}>Quiz Complete 🎉</Text>
 				<Text style={styles.resultText}>
 					You got {correctCount} out of {totalQuestions} correct!
 				</Text>
 				<Text style={styles.resultText}>+{earnedPoints} points earned</Text>
-			</View>
+        <Text style={styles.goBackText}>Press anywhere to go back to the quiz start screen.</Text>
+			</Pressable>
 		);
 	}
 
@@ -134,20 +145,29 @@ const styles = StyleSheet.create({
   },
   resultContainer: {
     flex: 1,
+    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fffaf0",
     padding: 20,
   },
   resultTitle: {
+    fontFamily: "SawarabiMincho_400Regular",
     fontSize: 32,
-    fontWeight: "bold",
     marginBottom: 20,
     color: "#3E2C1C",
   },
   resultText: {
+    fontFamily: "sans-serif",
     fontSize: 20,
     marginBottom: 10,
     color: "#3E2C1C",
+  },
+  goBackText: {
+    fontFamily: "SawarabiMincho_400Regular",
+    fontSize: 16,
+    textAlign: "center",
+    color: "#3E2C1C",
+    marginTop: 100
   },
 });

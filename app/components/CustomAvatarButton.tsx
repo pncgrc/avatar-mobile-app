@@ -1,6 +1,17 @@
+import { SawarabiMincho_400Regular } from '@expo-google-fonts/sawarabi-mincho/400Regular';
+import { useFonts } from '@expo-google-fonts/sawarabi-mincho/useFonts';
 import { StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle } from "react-native";
 
 export default function CustomAvatarButton({ title, style, onPress, disabled }: { title: string; style?: StyleProp<ViewStyle>; onPress?: () => void; disabled?: boolean }) {
+  
+  let [fontsLoaded] = useFonts({
+    SawarabiMincho_400Regular
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+  
   return (
     <TouchableOpacity onPress={onPress} style={[styles.button, style]} disabled={disabled}>
       <Text style={styles.text}>{title}</Text>
@@ -24,9 +35,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: "#2f2f2f",
-    fontSize: 18,
-    fontWeight: "bold",
-    fontFamily: "serif",
+    fontFamily: "SawarabiMincho_400Regular",
+    fontSize: 20,
     textAlign: "center",
   },
 });
