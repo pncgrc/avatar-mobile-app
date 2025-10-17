@@ -22,11 +22,10 @@
 
 ## Things I would've liked to implement
 1. A button inside of the characters filter text input for better UX
-2. Custom fonts to give the app more Avatar styling identity
+2. ~~Custom fonts to give the app more Avatar styling identity~~
 3. Maybe a background that adds some texture to some empty pages like the quiz one, where you have to choose between start or add questions
 4. Logic to delete submitted question by the user on their profile.
 5. Ability to add characters to favorites and having the favorite characters displayed on the profile.
 6. Also the ability to remove them from favorites either on the respective character cards (both detail and basic) and on the user profile
 7. Cleaning up my code!
 8. Styling changes: I haven't managed to make the app look NOT boring.
-9. The ability to change from light to dark theme
